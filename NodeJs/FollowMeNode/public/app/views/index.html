@@ -36,10 +36,11 @@
                         Follow Me <<
                     </a>
                 </li>
-                <li>                    
+                <li>
+                    <a data-toggle="modal" data-target="#myModal" ng-click="main.clickedBlogId = null">Add Blog</span>
                 </li>
                 <li ng-repeat="blog in main.blogs" class="active">
-                    <a href="#/blogDetail/{{blog._id}}">{{blog.Name}} <b class="pull-right" style="font-size:20px; font-weight:bold;padding-right: 10px">></b></a>
+                    <a href="#/blogDetail/{{blog._id}}">{{blog.Name}} <b class="pull-right" style="font-size:20px; font-weight:bold;padding-right: 10px" data-toggle="modal" data-target="#myModal" ng-click="main.clickedBlogId = blog._id">Edit</b></a>
                 </li>
             </ul>
         </div>
@@ -48,6 +49,33 @@
         <!-- Page Content -->
         <div id="page-content-wrapper" ng-view></div>
         <!-- /#page-content-wrapper -->
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title" ng-show="main.clickedBlogId === null">Add Blog</h4>
+                  <h4 class="modal-title" ng-show="main.clickedBlogId !== null">Edit Blog</h4>
+                </div>
+                <div class="modal-body">
+                  <form>
+                      <label for="Name">Name</label>
+                      <input type="text" name="Name"/>
+                      <label for="Url">Url</label>
+                      <input type="text" name="Url"/>
+                      <label for="Rss">RSS</label>
+                      <input type="text" name="Rss"/>
+                      <input type="button" class="btn btn primary" value="Save"/>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
     </div>
     <!-- /#wrapper -->
