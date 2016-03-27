@@ -1,0 +1,25 @@
+{
+  "name": "follow-me",
+  "description": "Blog Feed with Rss",
+  "main": "index.js",
+  "authors": [
+    "Emir Çokdoğan"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "blog",
+    "feed",
+    "rss",
+    "subscribtion"
+  ],
+  "moduleType": [],
+  "homepage": "public/app/view/index.html",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
