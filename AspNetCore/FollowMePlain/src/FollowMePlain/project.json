@@ -13,7 +13,9 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
     "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
-    "Microsoft.AspNet.WebApi": "5.2.3"
+    "Microsoft.AspNet.WebApi": "5.2.3",
+    "Microsoft.AspNet.Authentication.Cookies": "1.0.0-rc1-final",
+    "Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-beta5"
   },
 
   "commands": {

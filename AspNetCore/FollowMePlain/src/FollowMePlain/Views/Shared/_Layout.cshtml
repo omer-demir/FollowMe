@@ -31,10 +31,23 @@
                     </a>
                     <span ng-click="createBlogItem()"><i class="fa fa-plus"></i></span>
                 </li>
-                <li ng-repeat="item in blogItems">
-                    <a href="#" ng-click="showDetail(item)">{{item.name}}</a>
-                    <span ng-click="deleteBlogItem(item.id)"><i class="fa fa-times"></i></span>
-                </li>
+                @if (!User.Claims.Any()) {
+                    <li>
+                        <a href="/Account/Login">Login</a>
+                    </li>
+                    <li>
+                        @*<a asp-controller="Account" asp-action="Register">Register</a>*@
+                        <a href="/Account/Register">Register</a>
+                    </li>
+                }else{
+                    <li ng-repeat="item in blogItems">
+                        <a href="#" ng-click="showDetail(item)">{{item.name}}</a>
+                        <span ng-click="deleteBlogItem(item.id)"><i class="fa fa-times"></i></span>
+                    </li>
+                    <li>
+                        <a href="/Account/Logout">Logout</a>
+                    </li>
+                }
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->

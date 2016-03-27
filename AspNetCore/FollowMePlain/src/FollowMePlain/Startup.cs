@@ -27,12 +27,9 @@ namespace FollowMePlain {
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc().AddJsonOptions(a => a.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
             services.AddSingleton<IBlogRepository, BlogRepository>();
-            services.AddCors(options => options.AddPolicy("AllowAll", new CorsPolicy {
-                Origins = { "*" },
-                Headers = { "*" },
-                Methods = { "*" },
-                SupportsCredentials = true
-            }));
+            services.AddSingleton<IUserRepository, UserRepository>();
+
+            //services.AddSession();
             //services.AddCaching();
         }
 
@@ -42,7 +39,13 @@ namespace FollowMePlain {
             logger.AddConsole(Configuration.GetSection("Logging"));
             logger.AddDebug();
 
-            app.UseCors("AllowAll");
+            app.UseCookieAuthentication(a => {
+                //a.AccessDeniedPath = "/Account/Forbidden";
+                a.LoginPath = "/Account/Login";
+                a.LogoutPath = "/Account/Logout";
+                a.AutomaticAuthenticate = true;
+                a.AutomaticChallenge = true;
+            });
 
             app.UseMvc(a => {
                 a.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
@@ -52,6 +55,7 @@ namespace FollowMePlain {
 
 
             app.UseStaticFiles();
+
         }
 
         // Entry point for the application.

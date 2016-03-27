@@ -1,0 +1,40 @@
+﻿@model FollowMePlain.Data.User
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <section>
+            <form action="/Account/Register" method="post" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">UserName</label>
+                    <div class="col-md-10">
+                        <input type="text" name="Username" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Email</label>
+                    <div class="col-md-10">
+                        <input type="email" name="Email"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Password</label>
+                    <div class="col-md-10">
+                        <input type="password" name="Password" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default">Log in</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
