@@ -6,7 +6,7 @@ var UserSchema = new Schema({
 
 },
     {
-        collection: "BlogItems"
+        collection: "Users"
     }
 );
 

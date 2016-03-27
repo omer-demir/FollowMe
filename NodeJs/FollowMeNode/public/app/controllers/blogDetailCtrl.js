@@ -14,16 +14,15 @@
 			};
 
 			function getBlogDetail() {
-				console.log(vm.blogDetail);
+                $http.defaults.useXDomain = true;
 			    $http({
-	                url: /*'http://crossorigin.me/' +*/ vm.blogDetail.RssFeedLink,
+	                url: 'http://crossorigin.me/' + vm.blogDetail.RssFeedLink,
 	                method: 'GET'
 	            }).then(function (result) {
 	                var parsedXml = $.parseXML(result.data);
 	                var x = xmlToJson(parsedXml);
 	                var rssFeed = x.rss.channel.item[0];
-
-	                console.log(rssFeed);
+                    
 					vm.blogDetail = {
 						Title: rssFeed.title["#text"],
 						ShortDescription: $sce.trustAsHtml(rssFeed.description["#text"]),

@@ -15,6 +15,45 @@ function createToken(user) {
 module.exports = function(app, express) {
     var api = express.Router();
 
+    api.get("/setup", function(req, res) {
+
+        var blogs = [
+            new BlogItem({
+                Url: "http://johnpapa.net",
+                Name: "John Papa",
+                FollowDate: Date.now(),
+                RssFeedLink: "http://www.johnpapa.net/feed.xml",
+                BlogItemPosts: []
+            }),
+            new BlogItem({
+                Url: "http://blog.longle.net/",
+                Name: "Long Le",
+                FollowDate: Date.now(),
+                RssFeedLink: "http://blog.longle.net/feed/",
+                BlogItemPosts: []
+            }),
+            new BlogItem({
+                Url: "http://brockallen.com/",
+                Name: "Brock Allen",
+                FollowDate: Date.now(),
+                RssFeedLink: "http://brockallen.com/feed/",
+                BlogItemPosts: []
+            }),
+        ];
+
+        for (var i = 0; i < blogs.length; i++) {
+            blogs[i].save(function(err, newblog) {
+                if (err) {
+                    console.log(err);
+                }
+
+                console.log(newblog);
+            });
+        }
+
+        res.send({ message: "OK" });
+    });
+
     api.get("/blogs", function(req, res) {
 
         BlogItem.find({}, function(err, blogs) {
@@ -34,13 +73,21 @@ module.exports = function(app, express) {
                 res.send(err);
                 return;
             }
-            console.log(posts);
+
             res.json(posts);
         });
     });
 
     api.post("/createBlog", function(req, res) {
-        var blog = new Blog(req.body.blog);
+        
+        var blog = new BlogItem({
+            Url: req.body.Url,
+            Name: req.body.Name,
+            FollowDate: Date.now(),
+            RssFeedLink: req.body.RssFeedLink,
+            BlogItemPosts: []
+        });
+        
         blog.save(function(err, newBlog) {
             if (err) {
                 res.send(err);
@@ -48,12 +95,16 @@ module.exports = function(app, express) {
             }
 
             res.json(newBlog);
-        })
+        });
     });
 
-    api.post("/updateBlog", function(req, res) {
+    api.post("/updateBlog/:id", function(req, res) {
 
-        BlogItem.findOneAndUpdate({ "_id": req.params.id }, req.body.blog, { upsert: true }, function(err, msg) {
+        BlogItem.findOneAndUpdate({ "_id": req.params.id }, {
+            Url: req.body.Url,
+            Name: req.body.Name,
+            RssFeedLink: req.body.RssFeedLink,
+        }, { upsert: true }, function(err, msg) {
             if (err) {
                 res.send(err);
                 return;
@@ -63,7 +114,7 @@ module.exports = function(app, express) {
         })
     });
 
-    api.post("/deleteBlog", function(req, res) {
+    api.post("/deleteBlog/:id", function(req, res) {
 
         BlogItem.remove({ "_id": req.params.id }, function(err) {
             if (err) {
@@ -74,23 +125,23 @@ module.exports = function(app, express) {
             res.json("successfully deleted.");
         })
     });
-    
-    api.post("/register", function(req, res){
+
+    api.post("/register", function(req, res) {
         var user = new User({
             username: req.body.username,
             name: req.body.name,
             password: req.body.password
         });
-        
-        User.save(function(err){
-            if(err){
+
+        User.save(function(err) {
+            if (err) {
                 res.send(err);
                 return;
             }
-            
+
         });
     });
-    
+
     api.post("/login", function(req, res) {
         User.find({ username: req.body.username })
             .select("name username password")
@@ -123,7 +174,7 @@ module.exports = function(app, express) {
     });
 
     api.use(function(req, res, next) {
-        var token = req.body.token || req.param("token") || req.header["x-access-token"];
+        var token = req.body.token || req.params.token || req.header["x-access-token"];
 
         if (token) {
             jwt.verify(token, app.get('superSecret'), function(err, decoded) {

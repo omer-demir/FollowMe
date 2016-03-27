@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="followme">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,10 +38,31 @@
                     </a>
                 </li>
                 <li>
-                    <a data-toggle="modal" data-target="#myModal" ng-click="main.clickedBlogId = null">Add Blog</span>
+                    <a data-toggle="modal" data-target="#myModal" ng-click="main.selectedBlog = null">Add Blog</span>
                 </li>
                 <li ng-repeat="blog in main.blogs" class="active">
-                    <a href="#/blogDetail/{{blog._id}}">{{blog.Name}} <b class="pull-right" style="font-size:20px; font-weight:bold;padding-right: 10px" data-toggle="modal" data-target="#myModal" ng-click="main.clickedBlogId = blog._id">Edit</b></a>
+                    <a href="#/blogDetail/{{blog._id}}">{{blog.Name}} <b class="pull-right" style="font-size:20px; font-weight:bold;padding-right: 10px" data-toggle="modal" data-target="#myModal" ng-click="main.selectedBlog = blog">Edit</b></a>
+                </li>
+            </ul>
+        </div>
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#/">
+                        Follow Me <<
+                    </a>
+                </li>
+                <li>
+                    <a href="#/login">Login</a>
+                </li>
+                <li>
+                    <a href="#/register">Register</a>
+                </li>
+                <li>
+                    <a data-toggle="modal" data-target="#myModal" ng-click="main.selectedBlog = null">Add Blog</span>
+                </li>
+                <li ng-repeat="blog in main.blogs" class="active">
+                    <a href="#/blogDetail/{{blog._id}}">{{blog.Name}} <b class="pull-right" style="font-size:20px; font-weight:bold;padding-right: 10px" data-toggle="modal" data-target="#myModal" ng-click="main.selectedBlog = blog">Edit</b></a>
                 </li>
             </ul>
         </div>
@@ -50,57 +72,67 @@
         <div id="page-content-wrapper" ng-view></div>
         <!-- /#page-content-wrapper -->
 
-          <!-- Modal -->
-          <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog modal-sm">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title" ng-show="main.clickedBlogId === null">Add Blog</h4>
-                  <h4 class="modal-title" ng-show="main.clickedBlogId !== null">Edit Blog</h4>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" ng-show="!main.selectedBlog || !main.selectedBlog._id">Add Blog</h4>
+                        <h4 class="modal-title" ng-show="main.selectedBlog && main.selectedBlog._id">Edit Blog</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="Name">Name:</label>
+                                <input type="text" class="form-control" id="name" ng-model="main.selectedBlog.Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="url">Url:</label>
+                                <input type="text" class="form-control" id="url" ng-model="main.selectedBlog.Url">
+                            </div>
+                            <div class="form-group">
+                                <label for="rss">RSS:</label>
+                                <input type="text" class="form-control" id="rss" ng-model="main.selectedBlog.RssFeedLink">
+                            </div>
+                            <button type="submit" data-dismiss="modal" class="btn btn-default" ng-click="main.createBlog(main.selectedBlog)" ng-if="!main.selectedBlog || !main.selectedBlog._id">Create</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-default" ng-click="main.updateBlog(main.selectedBlog)" ng-if="main.selectedBlog && main.selectedBlog._id">Save</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-warning pull-right" ng-click="main.deleteBlog(main.selectedBlog)"
+                            ng-if="main.selectedBlog && main.selectedBlog._id">Delete</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer ">
+                        <button type="button " class="btn btn-default " data-dismiss="modal ">Close</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                  <form>
-                      <label for="Name">Name</label>
-                      <input type="text" name="Name"/>
-                      <label for="Url">Url</label>
-                      <input type="text" name="Url"/>
-                      <label for="Rss">RSS</label>
-                      <input type="text" name="Rss"/>
-                      <input type="button" class="btn btn primary" value="Save"/>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
 
     </div>
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/jquery/dist/jquery.js "></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js "></script>
 
     <!-- AngularJs -->
-    <script src="/lib/angular/angular.min.js"></script>
-    <script src="/lib/angular-route/angular-route.min.js"></script>
+    <script src="/lib/angular/angular.min.js "></script>
+    <script src="/lib/angular-route/angular-route.min.js "></script>
 
     <!-- Angular APP -->
-    <script src="/app/app.js"></script>
-    <script src="/app/services/blogService.js"></script>
-    <script src="/app/controllers/mainCtrl.js"></script>
-    <script src="/app/controllers/blogDetailCtrl.js"></script>
+    <script src="/app/app.js "></script>
+    <script src="/app/services/authService.js "></script>
+    <script src="/app/services/blogService.js "></script>
+    <script src="/app/controllers/mainCtrl.js "></script>
+    <script src="/app/controllers/blogDetailCtrl.js "></script>
 
     <!-- Menu Toggle Script -->
     <script>
-    $("#menu-toggle").click(function(e) {
+        $("#menu-toggle ").click(function(e) {
         e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
+        $("#wrapper ").toggleClass("toggled ");
     });
     </script>
 

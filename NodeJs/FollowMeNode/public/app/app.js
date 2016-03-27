@@ -8,6 +8,12 @@
     		.when("/",{
                     templateUrl: "app/views/pages/home.html"
                 })
+    		.when("/login",{
+                    templateUrl: "app/views/pages/login.html"
+                })
+    		.when("/register",{
+                    templateUrl: "app/views/pages/register.html"
+                })
     		.when("/blogDetail/:id",{
                     templateUrl: "app/views/pages/blogDetail.html",
                     controller: "BlogDetailController",
