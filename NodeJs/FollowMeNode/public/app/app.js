@@ -13,10 +13,14 @@
                         templateUrl: "app/views/pages/home.html"
                     })
                     .when("/login", {
-                        templateUrl: "app/views/pages/login.html"
+                        templateUrl: "app/views/pages/login.html",
+                        controller: "AuthController",
+                        controllerAs: "vm",
                     })
                     .when("/register", {
-                        templateUrl: "app/views/pages/register.html"
+                        templateUrl: "app/views/pages/register.html",
+                        controller: "AuthController",
+                        controllerAs: "vm",
                     })
                     .when("/blogDetail/:id", {
                         templateUrl: "app/views/pages/blogDetail.html",
