@@ -1,0 +1,28 @@
+<style>
+	#blogDetail td:first-child{
+		width:150px;
+	}
+</style>
+
+<div class="container">
+	<div class="row">
+		<table class="table table-striped" id="blogDetail">
+			<tr>
+				<td>URL</td>
+				<td><a href="{{vm.blogDetail.Url}}" target="_blank">{{vm.blogDetail.Url}}</a></td>
+			</tr>
+			<tr>
+				<td>Title</td>
+				<td>{{vm.blogDetail.Title}}</td>
+			</tr>
+			<tr>
+				<td>Content</td>
+				<td>{{vm.blogDetail.ShortDescription}}</td>
+			</tr>
+			<tr>
+				<td>Created Date</td>
+				<td>{{vm.blogDetail.CreateDate | date: 'd MMM y, HH:mm'}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
