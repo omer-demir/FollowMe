@@ -7,6 +7,7 @@ var BlogItemSchema = new Schema({
 	Url: {type: String},
     Name: {type: String},
     FollowDate: {type: Date, default: Date.now},
+    RssFeedLink: {type:String},
     BlogItemPosts: {type: Array}
     
 },{collection:"BlogItems"});

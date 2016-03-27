@@ -26,7 +26,7 @@ module.exports = function(app, express) {
 				return;
 			}
 			console.log(posts);
-			res.json(posts.BlogItemPosts && posts.BlogItemPosts.length > 0 ? posts.BlogItemPosts[0] : {});
+			res.json(posts);
 		});
 	});
 
