@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace FollowMePlain.Data
-{
-    public class BlogRepository:IBlogRepository
-    {
+namespace FollowMePlain.Data {
+    public class BlogRepository : IBlogRepository {
         private readonly IMongoDatabase _database;
 
         public BlogRepository() {
@@ -18,7 +16,7 @@ namespace FollowMePlain.Data
         #region Implementation of IBlogRepository
 
         public IEnumerable<BlogItem> AllSpeakers() {
-            var filterDefinition=new BsonDocument();
+            var filterDefinition = new BsonDocument();
 
             return _database.GetCollection<BlogItem>("BlogItems").FindAsync(filterDefinition).Result.ToListAsync().Result;
         }
@@ -28,7 +26,7 @@ namespace FollowMePlain.Data
         }
 
         public void Add(BlogItem speaker) {
-            throw new NotImplementedException();
+            _database.GetCollection<BlogItem>("BlogItems").InsertOneAsync(speaker);
         }
 
         public void Update(BlogItem speaker) {
@@ -36,7 +34,9 @@ namespace FollowMePlain.Data
         }
 
         public bool Remove(ObjectId id) {
-            throw new NotImplementedException();
+            var blogCollection = _database.GetCollection<BlogItem>("BlogItems");
+            var predicate = Builders<BlogItem>.Filter.Eq(a => a.Id, id);
+            return blogCollection.DeleteOneAsync(predicate).Result.DeletedCount > 0;
         }
 
         public void SeedData() {
@@ -47,6 +47,7 @@ namespace FollowMePlain.Data
                     FollowDate = DateTime.Now,
                     Name = "John Papa",
                     Url = "http://johnpapa.net/",
+                    RssFeedLink = "http://crossorigin.me/http://johnpapa.net/feed.xml",
                     BlogItemPosts = new List<BlogItemPost> {
                         new BlogItemPost {
                             Url = "http://johnpapa.net/es5-es2015-typescript/",
@@ -65,6 +66,7 @@ namespace FollowMePlain.Data
                     FollowDate = DateTime.Now,
                     Name = "Scott Allen",
                     Url = "http://odetocode.com/",
+                    RssFeedLink = "http://crossorigin.me/http://feeds.feedburner.com/odeToCode",
                     BlogItemPosts = new List<BlogItemPost> {
                         new BlogItemPost {
                             Url = "http://odetocode.com/blogs/scott/archive/2016/03/22/play-by-play-with-jon-skeet-and-rob-conery.aspx",
@@ -83,6 +85,7 @@ namespace FollowMePlain.Data
                     FollowDate = DateTime.Now,
                     Name = "Scott Guthrie",
                     Url = "https://weblogs.asp.net/scottgu",
+                    RssFeedLink = "http://crossorigin.me/https://weblogs.asp.net/scottgu/rss?containerid=13",
                     BlogItemPosts = new List<BlogItemPost> {
                         new BlogItemPost {
                             Url = "https://weblogs.asp.net/scottgu/welcoming-the-xamarin-team-to-microsoft",

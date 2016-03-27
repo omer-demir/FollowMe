@@ -46,7 +46,14 @@
       text-decoration: none; }
     .sidebar-nav li a:hover {
       text-decoration: none;
-      color: #fff;
+      color: #fff; }
+    .sidebar-nav li span {
+      float: right;
+      margin: 0 2rem;
+      color: #fff; }
+      .sidebar-nav li span:hover {
+        color: #7699cb; }
+    .sidebar-nav li:hover {
       background: rgba(255, 255, 255, 0.2); }
   .sidebar-nav > .sidebar-brand {
     height: 65px;

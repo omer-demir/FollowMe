@@ -65,6 +65,9 @@
             },
             'save': {
                 method: 'POST'
+            },
+            'delete': {
+                method:'DELETE'
             }
         });
 
@@ -82,22 +85,25 @@
             result.$promise.then(function (serviceResult) {
                 $scope.selectedBlogItem = undefined;
                 $scope.blogItems = serviceResult;
+                if (serviceResult.length>0) {
+                    showDetail(serviceResult[0]);
+                }
             }, function (err) {
                 //fail
                 //$log.error(err);
             });
         }
 
-        function showDetail(blogItemPosts) {
-            $scope.selectedBlogItem = blogItemPosts[0];
-            $scope.selectedBlogItem.trustedResourceUrl = $sce.trustAsResourceUrl($scope.selectedBlogItem.url);
-            $scope.selectedBlogItemPosts = blogItemPosts;
-            parseRssAndGetFirstItem();
+        function showDetail(blogItem) {
+            //$scope.selectedBlogItem = blogItemPosts[0];
+            //$scope.selectedBlogItem.trustedResourceUrl = $sce.trustAsResourceUrl($scope.selectedBlogItem.url);
+            //$scope.selectedBlogItemPosts = blogItemPosts;
+            parseRssAndGetFirstItem(blogItem.rssFeedLink);
         }
 
-        function parseRssAndGetFirstItem() {
+        function parseRssAndGetFirstItem(rssLink) {
             $http({
-                url: 'http://crossorigin.me/http://johnpapa.net/feed.xml',
+                url: rssLink,
                 method: 'GET'
             }).then(function (result) {
 
@@ -115,8 +121,49 @@
             });
         }
 
+        function deleteBlogItem(id) {
+            var result = apiServiceResource.get({
+                controller: 'blogApi',
+                apiCall: 'deleteBlogItem',
+                id:id
+            });
+            result.$promise.then(function (serviceResult) {
+                //scc
+                getBlogItems();
+                $log.info("Data is deleted");
+            }, function (err) {
+                //fail
+                $log.error(err);
+            });
+        }
+
+        function createBlogItem() {
+
+            var data = {
+                name: 'Deneme',
+                rssFeedLink: 'Deneme',
+                url:'Deneme'
+            };
+
+            var result = apiServiceResource.save({
+                controller: 'blogApi',
+                apiCall: 'createBlogItem'
+               
+            }, data);
+            result.$promise.then(function (serviceResult) {
+                //scc
+                $log.info("Data is created");
+                getBlogItems();
+            }, function (err) {
+                //fail
+                $log.error(err);
+            });
+        }
+
         $scope.init = getBlogItems;
         $scope.showDetail = showDetail;
+        $scope.createBlogItem = createBlogItem;
+        $scope.deleteBlogItem = deleteBlogItem;
     };
 
     homeController.$inject = injectParams;

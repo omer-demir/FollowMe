@@ -1,18 +1,7 @@
 var followMe;
 (function (followMe) {
     'use strict';
-    var HomeController = (function () {
-        function HomeController() {
-        }
-        return HomeController;
-    })();
-    followMe.HomeController = HomeController;
-    var app = angular.module('followMeApp');
-    app.controller('HomeController', ["$scope", "$log", "fastestAnimal", HomeController]);
-})(followMe || (followMe = {}));
-var followMe;
-(function (followMe) {
-    'use strict';
+    var followMeApp = angular.module('followMeApp', []);
     var BlogService = (function () {
         function BlogService($http, $log) {
             this.$http = $http;
@@ -33,13 +22,14 @@ var followMe;
         return BlogService;
     })();
     followMe.BlogService = BlogService;
-    var module = angular.module('followMeApp');
-    module.service("BlogService", ["$http", "$log", BlogService]);
-})(followMe || (followMe = {}));
-var followMe;
-(function (followMe) {
-    'use strict';
-    var followMeApp = angular.module('followMeApp', []);
+    followMeApp.service("BlogService", ["$http", "$log", BlogService]);
+    var HomeController = (function () {
+        function HomeController() {
+        }
+        return HomeController;
+    })();
+    followMe.HomeController = HomeController;
+    followMeApp.controller('HomeController', ["$scope", "$log", "fastestAnimal", HomeController]);
 })(followMe || (followMe = {}));
 ;
 //# sourceMappingURL=app.js.map

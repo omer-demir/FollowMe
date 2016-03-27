@@ -73,8 +73,19 @@ $sidebarLinkBackground: rgba(255,255,255,0.2);
             &:hover {
                 text-decoration: none;
                 color: $sidebarLinkHoverColor;
-                background: $sidebarLinkBackground;
             }
+        }
+
+        span {
+            float:right;
+            margin: 0 2rem;
+            color:#fff;
+            &:hover {
+                color: #7699cb;
+            }
+        }
+        &:hover{
+             background: $sidebarLinkBackground;
         }
     }
 
