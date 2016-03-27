@@ -1,24 +1,24 @@
 <div class="row">
     <div class="col-md-12">
         <section>
-            <form action="/login" method="post" class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form">
                 <div class="form-group">
                     <label class="col-md-2 control-label">UserName</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" name="Username" />
+                        <input type="text" class="form-control" ng-model="vm.user.Username" name="Username" />
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">Password</label>
                     <div class="col-md-10">
-                        <input type="password" class="form-control" name="Pass" />
+                        <input type="password" class="form-control" ng-model="vm.user.Password" name="Password" />
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-default">Log in</button>
+                        <button type="submit" ng-click="vm.login(vm.user)" class="btn btn-default">Log in</button>
                     </div>
                 </div>
             </form>

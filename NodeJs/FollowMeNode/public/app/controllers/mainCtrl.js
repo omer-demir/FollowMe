@@ -8,9 +8,6 @@
                 vm.createBlog = createBlog;
                 vm.updateBlog = updateBlog;
                 vm.deleteBlog = deleteBlog;
-                vm.register = register;
-                vm.login = login;
-
                 init();
 
                 function init() {
@@ -44,13 +41,5 @@
                             vm.blogs.splice(index, 1);
                         });
                 };
-
-                function register() {
-
-                }
-
-                function login() {
-
-                }
             }]);
 } ());
